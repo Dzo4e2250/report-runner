@@ -1,4 +1,4 @@
-sqlalchemy>=2.0
+sqlalchemy>=2.0   # potreben samo za PostgreSQL/MySQL/SQL Server — za SQLite ne
 pyyaml>=6.0
 # Gonilniki za baze — pusti samo tiste, ki jih rabis:
 psycopg2-binary>=2.9   # PostgreSQL

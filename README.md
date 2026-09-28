@@ -15,7 +15,7 @@ od zahtevanega, vsak dan ob 7:00.*
 ## Hiter zagon (demo v 2 minutah, brez pošiljanja e-pošte)
 
 ```bash
-git clone <repo> && cd report-runner
+git clone https://github.com/Dzo4e2250/report-runner.git && cd report-runner
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 
@@ -41,7 +41,7 @@ ugasnjen — poročilo se pošlje ob prvi priliki tisti dan).
 
 ```bash
 sudo apt install python3-venv    # samo na Debian/Ubuntu, enkrat
-git clone <repo> && cd report-runner
+git clone https://github.com/Dzo4e2250/report-runner.git && cd report-runner
 python3 -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 cp config.example.yaml config.yaml && cp .env.example .env   # dopolni obe
@@ -73,6 +73,18 @@ reports:
 ```
 
 Novo poročilo = nov blok v `config.yaml`. Brez sprememb kode, brez ponovne namestitve.
+
+## Spletni vmesnik (lokalno)
+
+```bash
+python3 web_ui.py
+# odprite http://localhost:8734
+```
+
+V brskalniku urejate baze in poročila (poizvedba, ura, prejemniki), vsako poročilo
+pa lahko s klikom **zaženete takoj kot test** — rezultat se odpre v novem zavihku,
+ne da bi se karkoli poslalo. Vmesnik je vezan samo na `127.0.0.1`, zato ni viden
+iz omrežja.
 
 ## Uporabni ukazi
 
