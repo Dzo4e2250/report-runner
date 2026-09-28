@@ -12,6 +12,36 @@ od zahtevanega, vsak dan ob 7:00.*
 
 ---
 
+## Kako deluje (v 30 sekundah)
+
+```
+config.yaml                .env                 vaša baza
+┌─────────────────┐   ┌──────────────┐   ┌────────────────┐
+│ katere baze     │   │ SMTP strežnik│   │ tabele s       │
+│ katera vprašanja│   │ gesla baz    │   │ podatki        │
+│ ob kateri uri   │   │              │   │                │
+│ komu pošlji     │   │              │   │                │
+└────────┬────────┘   └──────┬───────┘   └───────┬────────┘
+         └───────────────────┼───────────────────┘
+                             ▼
+                    ┌─────────────────┐
+                    │  report-runner  │  budi ga cron (vsako minuto)
+                    │                 │  ali teče v Dockerju
+                    └────────┬────────┘
+                             ▼
+              1. ali je kakšno poročilo na vrsti? (ura v config.yaml)
+              2. poveži se na bazo in izvedi SQL poizvedbo
+              3. oblikuj HTML tabelo + CSV prilogo
+              4. pošlji prek SMTP na prejemnike
+                 (če SMTP ni nastavljen → shrani v outbox/ za ogled)
+```
+
+**Vsakodnevna uporaba po namestitvi:** vse se nastavlja v `config.yaml` (ali prek
+lokalnega spletnega vmesnika). Niste več odvisni od razvijalca — novo poročilo,
+nov prejemnik ali druga ura pomeni eno spremembo v nastavitvah.
+
+---
+
 ## Hiter zagon (demo v 2 minutah, brez pošiljanja e-pošte)
 
 ```bash
