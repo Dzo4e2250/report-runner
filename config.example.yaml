@@ -1,0 +1,31 @@
+# Podatkovne baze — poljubno jih dodaj. Podpirane: PostgreSQL, MySQL/MariaDB,
+# SQLite, SQL Server (potreben je ustrezen gonilnik, glej README).
+databases:
+  demo:
+    url: sqlite:///data/demo.db
+  # erp:
+  #   url: ${ERP_DB_URL}   # npr. postgresql://user:geslo@strežnik:5432/baza
+
+reports:
+  # Primer iz naloge: narocila, kjer je dobavitelj potrdil kasnejsi rok od zahtevanega
+  - name: zamujena-narocila
+    database: demo
+    schedule: "07:00"            # vsak dan ob 7:00; lahko tudi seznam: ["07:00", "15:30"]
+    intro: "Naročila, pri katerih je dobavitelj potrdil kasnejši rok, kot smo zahtevali."
+    query: |
+      SELECT
+        stevilka_narocila AS "Št. naročila",
+        dobavitelj        AS "Dobavitelj",
+        zahtevani_rok     AS "Zahtevani rok",
+        potrjeni_rok      AS "Potrjeni rok",
+        CAST(julianday(potrjeni_rok) - julianday(zahtevani_rok) AS INTEGER) AS "Dni zamude",
+        znesek_eur        AS "Znesek (EUR)"
+      FROM narocila
+      WHERE potrjeni_rok > zahtevani_rok
+        AND status != 'preklicano'
+      ORDER BY "Dni zamude" DESC
+    email:
+      to:
+        - odgovorna.oseba@podjetje.si
+      subject: "Zamujena naročila dobaviteljev — {datum}"
+    attach_csv: true

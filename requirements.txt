@@ -1,0 +1,6 @@
+sqlalchemy>=2.0
+pyyaml>=6.0
+# Gonilniki za baze — pusti samo tiste, ki jih rabis:
+psycopg2-binary>=2.9   # PostgreSQL
+pymysql>=1.1           # MySQL / MariaDB
+# pyodbc>=5.0          # SQL Server (rabi sistemski unixODBC — glej README)

@@ -1,0 +1,8 @@
+services:
+  report-runner:
+    build: .
+    env_file: .env          # ce .env se ni, izpusti to vrstico -> porocila gredo v outbox/
+    volumes:
+      - ./config.yaml:/app/config.yaml        # svoja konfiguracija
+      - ./data:/app/data                      # baze (npr. SQLite) in outbox
+    restart: unless-stopped
