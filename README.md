@@ -104,6 +104,27 @@ reports:
 
 Novo poročilo = nov blok v `config.yaml`. Brez sprememb kode, brez ponovne namestitve.
 
+## Nastavitev e-pošte (SMTP)
+
+Vse je v `.env` (kopija `.env.example`) — datoteka je v `.gitignore` in **ne gre na GitHub**:
+
+```env
+SMTP_HOST=smtp.podjetje.si
+SMTP_PORT=587
+SMTP_TLS=true
+SMTP_USER=porocila@podjetje.si
+SMTP_PASSWORD=geslo
+SMTP_FROM=porocila@podjetje.si
+```
+
+- **Preverba nastavitev:** `python report_runner.py test-email --to vas@mail.si`
+- **Brez SMTP-ja nič ne "poči":** poročila se namesto pošiljanja shranijo v `outbox/`
+  (tako deluje demo takoj po kloniranju).
+- **Gmail:** potrebujete "app password" (myaccount.google.com/apppasswords, rabi 2FA),
+  host `smtp.gmail.com`, port 587.
+- **Microsoft 365:** host `smtp.office365.com`, port 587 (SMTP AUTH mora biti vklopljen).
+- `.env` berejo vsi načini zagona: ročni, cron in Docker.
+
 ## Spletni vmesnik (lokalno)
 
 ```bash
